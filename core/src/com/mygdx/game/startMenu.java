@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class startMenu implements Screen{
 
-    private static final int EXIT_BUTTON_WIDTH = 200;
-    private static final int EXIT_BUTTON_HEIGHT = 100;
-    private static final int PLAY_BUTTON_WIDTH = 250;
-    private static final int PLAY_BUTTON_HEIGHT = 100;
-    private static final int LOGO_WIDTH = 300;
-    private static final int LOGO_HEIGHT = 100;
-    private static final int EXIT_BUTTON_Y = 80;
-    private static final int PLAY_BUTTON_Y = 200;
-    private static final int LOGO_Y = 300;
+    private static final int EXIT_BUTTON_WIDTH = 300;
+    private static final int EXIT_BUTTON_HEIGHT = 200;
+    private static final int PLAY_BUTTON_WIDTH = 450;
+    private static final int PLAY_BUTTON_HEIGHT = 200;
+    private static final int LOGO_WIDTH = 450;
+    private static final int LOGO_HEIGHT = 200;
+    private static final int EXIT_BUTTON_Y = 150;
+    private static final int PLAY_BUTTON_Y = 500;
+    private static final int LOGO_Y = 800;
 
     final RottenRoots game;
 
@@ -34,7 +34,7 @@ public class startMenu implements Screen{
         playButtonInactive = new Texture("badlogic.jpg");
         exitButtonActive = new Texture("badlogic.jpg");
         exitButtonInactive = new Texture("badlogic.jpg");
-        logo = new Texture("preview.png");
+        logo = new Texture("RRPlaceHolderLogo.png");
         OptionsMenu = new Texture("gear-button.png");
 
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -49,6 +49,16 @@ public class startMenu implements Screen{
                 {
                     startMenu.dispose();
                     Gdx.app.exit();
+                }
+
+                //Options button
+                if (game.cam.getInputInGameWorld().x < x + x/2 + EXIT_BUTTON_WIDTH &&
+                        game.cam.getInputInGameWorld().x > x + x/2 &&
+                        RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT &&
+                        RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > EXIT_BUTTON_Y)
+                {
+                    startMenu.dispose();
+                    game.setScreen(new OptionsScreen(game));
                 }
 
                 //Play game button
@@ -81,32 +91,35 @@ public class startMenu implements Screen{
 
         //game.scrollingBackground.updateAndRender(delta, game.batch);
 
-        int x = RottenRoots.WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
+        int exit_x = RottenRoots.WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
+
         //exitbutton
-        if (game.cam.getInputInGameWorld().x < x + EXIT_BUTTON_WIDTH &&
-                game.cam.getInputInGameWorld().x > x &&
+        if (game.cam.getInputInGameWorld().x < exit_x + EXIT_BUTTON_WIDTH &&
+                game.cam.getInputInGameWorld().x > exit_x &&
                 RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT &&
                 RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > EXIT_BUTTON_Y)
         {
-            game.batch.draw(exitButtonActive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            game.batch.draw(exitButtonActive, exit_x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
         else {
-            game.batch.draw(exitButtonInactive, x - x/2, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            game.batch.draw(exitButtonInactive, exit_x - exit_x/2, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
-        //settings
-        game.batch.draw(OptionsMenu,x + x/2,EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+
+        int settings_x = RottenRoots.WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
+        //settings button
+        game.batch.draw(OptionsMenu,settings_x + settings_x/2,EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
 
         //playbutton
-        x = RottenRoots.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-        if (game.cam.getInputInGameWorld().x < x + PLAY_BUTTON_WIDTH &&
-                game.cam.getInputInGameWorld().x > x &&
+        int play_x = RottenRoots.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+        if (game.cam.getInputInGameWorld().x < play_x + PLAY_BUTTON_WIDTH &&
+                game.cam.getInputInGameWorld().x > play_x &&
                 RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT &&
                 RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > PLAY_BUTTON_Y)
         {
-            game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            game.batch.draw(playButtonActive, play_x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
         else {
-            game.batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            game.batch.draw(playButtonInactive, play_x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
         //logo
         game.batch.draw(logo, RottenRoots.WIDTH / 2 - LOGO_WIDTH / 2, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
