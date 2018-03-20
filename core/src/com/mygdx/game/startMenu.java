@@ -12,8 +12,8 @@ public class startMenu implements Screen{
     private static final int EXIT_BUTTON_HEIGHT = 200;
     private static final int PLAY_BUTTON_WIDTH = 450;
     private static final int PLAY_BUTTON_HEIGHT = 200;
-    private static final int LOGO_WIDTH = 450;
-    private static final int LOGO_HEIGHT = 200;
+    private static final int LOGO_WIDTH = 650;
+    private static final int LOGO_HEIGHT = 300;
     private static final int EXIT_BUTTON_Y = 150;
     private static final int PLAY_BUTTON_Y = 500;
     private static final int LOGO_Y = 800;
@@ -34,7 +34,7 @@ public class startMenu implements Screen{
         playButtonInactive = new Texture("badlogic.jpg");
         exitButtonActive = new Texture("badlogic.jpg");
         exitButtonInactive = new Texture("badlogic.jpg");
-        logo = new Texture("RRPlaceHolderLogo.png");
+        logo = new Texture("UI_final/logo.png");
         OptionsMenu = new Texture("gear-button.png");
 
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -52,8 +52,9 @@ public class startMenu implements Screen{
                 }
 
                 //Options button
-                if (game.cam.getInputInGameWorld().x < x + x/2 + EXIT_BUTTON_WIDTH &&
-                        game.cam.getInputInGameWorld().x > x + x/2 &&
+                int x2 = x+ x/2;
+                if (game.cam.getInputInGameWorld().x < x2 + EXIT_BUTTON_WIDTH &&
+                        game.cam.getInputInGameWorld().x > x2 &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > EXIT_BUTTON_Y)
                 {
@@ -121,27 +122,11 @@ public class startMenu implements Screen{
         else {
             game.batch.draw(playButtonInactive, play_x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
-        //logo
-        game.batch.draw(logo, RottenRoots.WIDTH / 2 - LOGO_WIDTH / 2, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
+
+        game.batch.draw(logo, RottenRoots.WIDTH / 2 - LOGO_WIDTH / 2, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT); //logo
 
         game.batch.end();
 
-        /*
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-        game.batch.begin(); //batch is a spritebatch
-        game.font.draw(game.batch, "Welcome to RottenRoots!!! ", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-        game.batch.end();
-        */
-        /*
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new gameScreen());
-            dispose();
-        }*/
     }
 
 
@@ -167,6 +152,12 @@ public class startMenu implements Screen{
 
     @Override
     public void dispose() {
+        playButtonActive.dispose();
+        playButtonInactive.dispose();
+        exitButtonActive.dispose();
+        exitButtonInactive.dispose();
+        logo.dispose();
+        OptionsMenu.dispose();
         Gdx.input.setInputProcessor(null);
     }
 }

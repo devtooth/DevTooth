@@ -45,7 +45,6 @@ public class gameScreen implements Screen {
     TextureAtlas textureAtlas;
     Body banana;
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-    final RottenRoots game;
     //button
     Texture backToMenu;
     private static final int BACK_BUTTON_X = (int) (1920*0.04);
@@ -53,25 +52,32 @@ public class gameScreen implements Screen {
     private static final int BACK_BUTTON_Y_TOP = (int) (1080*0.04);
     private static final int BACK_BUTTON_DIAMETER = (int) (1920*0.08);
     float magic = (float) 1.3333; // 2560*1440 to full hd magic conversion rate
-
-    //fpscounter
-    BitmapFont fps;
+    Texture logo;
+    private static final int LOGO_WIDTH = 450;
+    private static final int LOGO_HEIGHT = 200;
+    private static final int LOGO_Y = 800;
+    private static final int LOGO_X = (int) (1920*0.88);
+    BitmapFont fps;//fpscounter
     int fpsInt = 0;
+    int screenWidth,screenHeight;
+
+    final RottenRoots game;
 
     public gameScreen(RottenRoots gam){
-
         this.game = gam;
+        final gameScreen gameScreen = this;
 
-        final int screenWidth = Gdx.graphics.getWidth();
-        final int screenHeight = Gdx.graphics.getHeight();
-
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        // set images to textures
         backToMenu = new Texture("vapenation.bmp");
-
+        logo = new Texture("UI_final/logo.png");
+        //Box2D and physics stuff
         Box2D.init();
         debugRenderer = new Box2DDebugRenderer();
         physicsBodies = new PhysicsShapeCache("physics.xml");
         world = new World(new Vector2(0, -80), true);
-
+        //camera
         camera = new OrthographicCamera();
         viewport = new ExtendViewport(1920, 1080, camera);
 
@@ -85,22 +91,15 @@ public class gameScreen implements Screen {
         fps.getData().setScale(2f, 2f);
 
         generateFruit();
-
         addSprites();
-/*
-    World is this size, (not your screen size)
-	public static final int WIDTH = 720;
-	public static final int HEIGHT = 480;
- */
-        Gdx.input.setInputProcessor(new InputAdapter() {
 
+        Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 //backToMenu button
                 //coordinates are on your phones resolution, starting from top left corner
                 //int x = (int) (screenWidth * 0.02); // 2560 *0.02 = 51.2
                 //int y = (int) (screenHeight * 0.02); //1440 *0.02 = 28.8
-
                 if (  screenX > BACK_BUTTON_X * magic &&
                         screenX < BACK_BUTTON_X + BACK_BUTTON_DIAMETER * magic &&
                         screenY > BACK_BUTTON_Y_TOP * magic &&
@@ -109,12 +108,17 @@ public class gameScreen implements Screen {
                     dispose();
                     game.setScreen(new startMenu(game));
                 }
-
+                int x = RottenRoots.WIDTH / 2 - LOGO_WIDTH / 2;
+                if (game.cam.getInputInGameWorld().x < x + LOGO_WIDTH && game.cam.getInputInGameWorld().x > x &&
+                        RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < LOGO_Y + LOGO_HEIGHT &&
+                        RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > LOGO_Y)
+                {
+                    gameScreen.dispose();
+                    game.setScreen(new VNScreen(game));
+                }
                 return super.touchUp(screenX, screenY, pointer, button);
             }
-
         });
-
     }
 
     @Override
@@ -124,29 +128,25 @@ public class gameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(0.57f, 0.77f, 0.85f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stepWorld();
         batch.begin();
         //button
         batch.draw(backToMenu,BACK_BUTTON_X,BACK_BUTTON_Y,BACK_BUTTON_DIAMETER,BACK_BUTTON_DIAMETER);
-
-        //fpscounter
         fpsInt = Gdx.graphics.getFramesPerSecond();
-        fps.draw(batch, "" + fpsInt, 10, 1060);
-
-        for (int i = 0; i < fruitBodies.length; i++) {
+        fps.draw(batch, "" + fpsInt, 10, 1060); //fpscounter
+        for (int i = 0; i < fruitBodies.length; i++) {  //fruitloop
             Body body = fruitBodies[i];
             String name = names[i];
-
             Vector2 position = body.getPosition();
             float degrees = (float) Math.toDegrees(body.getAngle());
             drawSprite(name, position.x, position.y, degrees);
         }
+        batch.draw(logo, RottenRoots.WIDTH / 2 - LOGO_WIDTH / 2, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT); //logo
         batch.end();
         // uncomment to show the polygons
-        debugRenderer.render(world, camera.combined);
+        //debugRenderer.render(world, camera.combined);
     }
 
     private void generateFruit() {
@@ -157,8 +157,8 @@ public class gameScreen implements Screen {
         for (int i = 0; i < fruitBodies.length; i++) {
             String name = fruitNames[random.nextInt(fruitNames.length)];
 
-            float x = random.nextFloat() * 500;
-            float y = random.nextFloat() * 500 + 50;
+            float x = random.nextFloat() * 1800;
+            float y = random.nextFloat() * 1000 + 50;
 
             names[i] = name;
             fruitBodies[i] = createBody(name, x, y, 0);
@@ -250,8 +250,12 @@ public class gameScreen implements Screen {
 
     @Override
     public void dispose() {
-        textureAtlas.dispose();
+        batch.dispose();
         sprites.clear();
+        backToMenu.dispose();
+        logo.dispose();
+        fps.dispose();
+        textureAtlas.dispose();
         world.dispose();
         debugRenderer.dispose();
     }

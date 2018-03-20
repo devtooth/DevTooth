@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,11 +17,21 @@ public class RottenRoots extends Game {
 	public SpriteBatch batch;
 	//public ScrollingBackground scrollingBackground;
 	public gameCamera cam;
-
 	BitmapFont font;
+    private Game game;
+    public Preferences prefs;
+	RottenRoots(){
+
+    }
 
 	@Override
 	public void create () {
+
+        prefs = Gdx.app.getPreferences("My Preferences");
+        prefs.putBoolean("sound",true);
+
+        //prefs.putString("name", "Eero");
+        prefs.flush();
 
 		batch = new SpriteBatch();
 		cam = new gameCamera(WIDTH, HEIGHT);
