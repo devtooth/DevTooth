@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -19,6 +20,7 @@ public class RottenRoots extends Game {
 	public gameCamera cam;
 	BitmapFont font;
     private Game game;
+    Sound snap;
     public Preferences prefs;
 	RottenRoots(){
 
@@ -26,10 +28,10 @@ public class RottenRoots extends Game {
 
 	@Override
 	public void create () {
-
+        snap = Gdx.audio.newSound(Gdx.files.internal("neck_snap.mp3"));
         prefs = Gdx.app.getPreferences("My Preferences");
-        prefs.putBoolean("sound",true);
-
+        //dont insert values here
+        //prefs.putBoolean("sound",true);
         //prefs.putString("name", "Eero");
         prefs.flush();
 

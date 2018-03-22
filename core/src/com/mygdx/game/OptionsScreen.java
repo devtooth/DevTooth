@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,11 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -41,12 +38,12 @@ public class OptionsScreen implements Screen {
     private static final int LOGO_WIDTH = 450;
     private static final int LOGO_HEIGHT = 200;
     private static final int LOGO_Y = (int) (1080*0.88);
-    BitmapFont currentName,currentSound;
-    String Name = "EEEROOOO", soundvalue = "_______";
+    BitmapFont currentName,currentSound,currentdifficulty;
+    String Name = "", soundvalue = "",difficultyString = "";
     //fpscounter
     BitmapFont fps;
     int fpsInt = 0;
-    String hintname = "Eero";
+    String hintname = "Your Name";
 
     private Stage stage;
     public int row_height;
@@ -67,20 +64,12 @@ public class OptionsScreen implements Screen {
         fps = new BitmapFont(); //fpscounter
         fps.getData().setScale(2f, 2f);
 
-        //charName bitmapfont
-        currentName = new BitmapFont(); //Name of char
-        currentName.getData().setScale(5f,5f);
-
-        //currensound bitmapfont
-        currentSound = new BitmapFont(); //sound true/false
-        currentSound.getData().setScale(5f,5f);
-
         //skin and stage
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        // exitbutton
+        //exitbutton
         Button exitButton = new TextButton("EXIT",mySkin,"default");
         exitButton.setSize(col_width, row_height);
         exitButton.setPosition(64,64);
@@ -100,7 +89,7 @@ public class OptionsScreen implements Screen {
         ImageButton nameEditButton = new ImageButton(mySkin);
         nameEditButton.setSize(col_width,col_width);
         nameEditButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("badlogic.jpg"))));
-        nameEditButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("badlogic.jpg"))));
+        nameEditButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("olvinhenki.jpg"))));
         nameEditButton.setPosition(col_width*2,row_height*5);
         nameEditButton.addListener(new InputListener(){
             @Override
@@ -113,16 +102,19 @@ public class OptionsScreen implements Screen {
             }
         });
         stage.addActor(nameEditButton);
+        //charName bitmapfont
+        currentName = new BitmapFont(); //Name of char
+        currentName.getData().setScale(5f,5f);
 
         ImageButton soundButton = new ImageButton(mySkin);
         soundButton.setSize(col_width,col_width);
         soundButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("badlogic.jpg"))));
-        soundButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("badlogic.jpg"))));
+        soundButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("olvinhenki.jpg"))));
         soundButton.setPosition(col_width*2,row_height*3);
         soundButton.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                //soundOption();
+                soundOption();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -130,7 +122,29 @@ public class OptionsScreen implements Screen {
             }
         });
         stage.addActor(soundButton);
+        //currentsound bitmapfont
+        currentSound = new BitmapFont(); //sound true/false
+        currentSound.getData().setScale(5f,5f);
 
+        ImageButton diffucultyButton = new ImageButton(mySkin);
+        diffucultyButton.setSize(col_width,col_width);
+        diffucultyButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("badlogic.jpg"))));
+        diffucultyButton.getStyle().imageDown = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("olvinhenki.jpg"))));
+        diffucultyButton.setPosition(col_width*6,row_height*5);
+        diffucultyButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                difficultyChange();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(diffucultyButton);
+        //currentdifficulty bitmapfont
+        currentdifficulty = new BitmapFont(); //sound true/false
+        currentdifficulty.getData().setScale(5f,5f);
 
 /*        Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
@@ -161,7 +175,25 @@ public class OptionsScreen implements Screen {
         });*/
     }
 
-    public void soundOption(){
+    private void difficultyChange(){
+        int difficulty = game.prefs.getInteger("difficulty");
+        switch (difficulty) {
+            case 0: game.prefs.putInteger("difficulty", 1);
+                    difficultyString = "normal";
+                    break;
+            case 1: game.prefs.putInteger("difficulty", 2);
+                    difficultyString = "hard";
+                    break;
+            case 2: game.prefs.putInteger("difficulty", 0);
+                    difficultyString = "easy";
+                    break;
+            default: difficultyString = "Invalid ";
+                    break;
+        }
+        game.prefs.flush();
+    }
+
+    private void soundOption(){
         if (!game.prefs.getBoolean("sound")){
             game.prefs.putBoolean("sound",true);
             soundvalue = "true";
@@ -170,7 +202,30 @@ public class OptionsScreen implements Screen {
             game.prefs.putBoolean("sound",false);
             soundvalue = "false";
         }
+        game.prefs.flush();
+    }
 
+    private void getSettings(){
+        if(game.prefs.getBoolean("sound")){
+            soundvalue = "true";
+        }else {
+            soundvalue = "false";
+        }
+
+        int difficulty = game.prefs.getInteger("difficulty");
+        switch (difficulty) {
+            case 0:
+                difficultyString = "easy";
+                break;
+            case 1:
+                difficultyString = "normal";
+                break;
+            case 2:
+                difficultyString = "hard";
+                break;
+            default: difficultyString = "Invalid ";
+                break;
+        }
     }
 
     @Override
@@ -182,16 +237,16 @@ public class OptionsScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.57f, 0.95f, 0.45f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        getSettings();
         batch.begin();
         //batch.draw(backToMenu,BACK_BUTTON_X,BACK_BUTTON_Y,BACK_BUTTON_DIAMETER,BACK_BUTTON_DIAMETER);   //backToMenu
         fpsInt = Gdx.graphics.getFramesPerSecond();
         fps.draw(batch, "" + fpsInt, 10, 1060); //fpscounter
         Name = game.prefs.getString("name", "no name stored");
         currentName.draw(batch,Name,col_width*3 ,row_height*5);
-/*        soundvalue = game.prefs.getString("sound", "noSound");
-        currentSound.draw(batch,soundvalue,col_width*3 ,row_height*3);*/
-        batch.draw(logo, col_width*4 - LOGO_WIDTH / 2, row_height*6, LOGO_WIDTH*2, LOGO_HEIGHT*2); //logo
+        currentSound.draw(batch,soundvalue,col_width*3 ,row_height*3);
+        currentdifficulty.draw(batch,difficultyString,col_width*6,row_height*5);
+        batch.draw(logo, col_width*4 - LOGO_WIDTH / 2, row_height*6, (int)(LOGO_WIDTH*1.5), (int)(LOGO_HEIGHT*1.5)); //logo
         batch.end();
 
         stage.act();
@@ -224,6 +279,8 @@ public class OptionsScreen implements Screen {
         stage.dispose();
         batch.dispose();
         fps.dispose();
+        currentSound.dispose();
+        currentdifficulty.dispose();
         currentName.dispose();
     }
 }

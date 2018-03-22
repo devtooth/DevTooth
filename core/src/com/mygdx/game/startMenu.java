@@ -47,7 +47,6 @@ public class startMenu implements Screen{
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > EXIT_BUTTON_Y)
                 {
-                    startMenu.dispose();
                     Gdx.app.exit();
                 }
 
@@ -58,6 +57,7 @@ public class startMenu implements Screen{
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > EXIT_BUTTON_Y)
                 {
+                    game.snap.play(1f);
                     startMenu.dispose();
                     game.setScreen(new OptionsScreen(game));
                 }
@@ -68,6 +68,7 @@ public class startMenu implements Screen{
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > PLAY_BUTTON_Y)
                 {
+                    game.snap.play(1f);
                     startMenu.dispose();
                     game.setScreen(new gameScreen(game));
                 }
@@ -152,12 +153,13 @@ public class startMenu implements Screen{
 
     @Override
     public void dispose() {
+        Gdx.input.setInputProcessor(null);
         playButtonActive.dispose();
         playButtonInactive.dispose();
         exitButtonActive.dispose();
         exitButtonInactive.dispose();
-        logo.dispose();
         OptionsMenu.dispose();
-        Gdx.input.setInputProcessor(null);
+        logo.dispose();
+
     }
 }

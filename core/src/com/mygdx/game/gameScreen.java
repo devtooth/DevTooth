@@ -105,6 +105,7 @@ public class gameScreen implements Screen {
                         screenY > BACK_BUTTON_Y_TOP * magic &&
                         screenY < BACK_BUTTON_Y_TOP + BACK_BUTTON_DIAMETER* magic)
                 {
+                    game.snap.play(1f);
                     dispose();
                     game.setScreen(new startMenu(game));
                 }
@@ -113,6 +114,7 @@ public class gameScreen implements Screen {
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y < LOGO_Y + LOGO_HEIGHT &&
                         RottenRoots.HEIGHT - game.cam.getInputInGameWorld().y > LOGO_Y)
                 {
+                    game.snap.play(1f);
                     gameScreen.dispose();
                     game.setScreen(new VNScreen(game));
                 }

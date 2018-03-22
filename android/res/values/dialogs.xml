@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialog1">
+        <b number="1" status="unlocked">
+            test dialog for test things
+        </b>
+        <b number="2" status="locked">
+            test2 dialog2 for2 test2 things2
+        </b>
+    </string>
+
+    <string name="dialog2">
+        second test dialog for test things
+    </string>
+
+</resources>
