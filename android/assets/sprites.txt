@@ -1,0 +1,110 @@
+sprites.png
+size: 768, 722
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ammo
+  rotate: false
+  xy: 113, 0
+  size: 33, 113
+  orig: 33, 113
+  offset: 0, 0
+  index: -1
+ammoSilhoutte
+  rotate: false
+  xy: 146, 0
+  size: 33, 113
+  orig: 33, 113
+  offset: 0, 0
+  index: -1
+angryTooth
+  rotate: false
+  xy: 179, 0
+  size: 87, 144
+  orig: 87, 144
+  offset: 0, 0
+  index: -1
+banana
+  rotate: false
+  xy: 266, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bullet
+  rotate: false
+  xy: 76, 0
+  size: 37, 36
+  orig: 37, 36
+  offset: 0, 0
+  index: -1
+cherries
+  rotate: false
+  xy: 0, 144
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+crate
+  rotate: false
+  xy: 522, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+deadWizard
+  rotate: false
+  xy: 374, 144
+  size: 192, 288
+  orig: 192, 288
+  offset: 0, 0
+  index: -1
+flappyEpe
+  rotate: false
+  xy: 128, 144
+  size: 246, 210
+  orig: 246, 210
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 38, 0
+  size: 38, 34
+  orig: 38, 34
+  offset: 0, 0
+  index: -1
+heartSilhoutte
+  rotate: false
+  xy: 0, 0
+  size: 38, 34
+  orig: 38, 34
+  offset: 0, 0
+  index: -1
+orange
+  rotate: false
+  xy: 394, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+toothWizard
+  rotate: false
+  xy: 566, 144
+  size: 193, 289
+  orig: 193, 289
+  offset: 0, 0
+  index: -1
+toothWizardLowHealth
+  rotate: false
+  xy: 0, 433
+  size: 193, 289
+  orig: 193, 289
+  offset: 0, 0
+  index: -1
+youDied
+  rotate: false
+  xy: 193, 433
+  size: 575, 236
+  orig: 575, 236
+  offset: 0, 0
+  index: -1
