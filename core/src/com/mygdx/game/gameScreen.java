@@ -262,8 +262,3 @@ public class gameScreen implements Screen {
         debugRenderer.dispose();
     }
 }
-
-//hauskaa
-//delet this
-//hello
-//gfawufhuawfwefewf
