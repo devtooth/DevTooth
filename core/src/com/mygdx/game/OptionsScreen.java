@@ -44,7 +44,6 @@ public class OptionsScreen implements Screen {
     BitmapFont fps;
     int fpsInt = 0;
     String hintname = "Your Name";
-    String koira ="voihan koira";
 
     private Stage stage;
     public int row_height;
