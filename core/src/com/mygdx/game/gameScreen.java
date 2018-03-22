@@ -45,7 +45,7 @@ public class gameScreen implements Screen {
     TextureAtlas textureAtlas;
     Body banana;
     final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-    //button
+    //buttonni
     Texture backToMenu;
     private static final int BACK_BUTTON_X = (int) (1920*0.04);
     private static final int BACK_BUTTON_Y = (int) (1080*0.88);

@@ -8,7 +8,7 @@ import com.badlogic.gdx.Input;
  * Created by velij on 19.3.2018.
  */
 
-class MyTextInputListener implements Input.TextInputListener {
+public class MyTextInputListener implements Input.TextInputListener {
 
     private final RottenRoots game;
     String nameToSettings;

@@ -20,7 +20,7 @@ import java.util.Iterator;
  * Created by velij on 19.3.2018.
  */
 
-class VNScreen implements Screen {
+public class VNScreen implements Screen {
     final RottenRoots game;
     OrthographicCamera camera;
     ExtendViewport viewport;
