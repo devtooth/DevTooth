@@ -80,6 +80,7 @@ class VNScreen implements Screen {
         }*/
 
         //FileHandle ProgressFileHandle = new FileHandle("res/values/dialogs.xml");
+/*
         FileHandle ProgressFileHandle = Gdx.files.internal("res/values/dialogs.xml");
         XmlReader xml = new XmlReader();
         XmlReader.Element xml_element = xml.parse(ProgressFileHandle);
@@ -88,9 +89,8 @@ class VNScreen implements Screen {
             XmlReader.Element level_element = (XmlReader.Element)iterator_level.next();
             string_number = level_element.getAttribute("number");
             textStatus = level_element.getAttribute("status");
-
         }
-
+*/
 
 /*
 <pack name="Cappellino" num_monete_livello="1100">
