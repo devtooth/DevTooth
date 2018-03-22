@@ -263,5 +263,7 @@ public class gameScreen implements Screen {
     }
 }
 
-
+//hauskaa
 //delet this
+//hello
+//gfawufhuaw
